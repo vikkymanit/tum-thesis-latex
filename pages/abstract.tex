@@ -1,5 +1,14 @@
 \chapter{\abstractname}
-
+\setlength{\parskip}{1em}
+\setlength\parindent{0pt}
 %TODO: Abstract
+
+Publish-subscribe middleware paradigm is a scalable solution for large scale distributed systems. Due to its asynchronous nature, it enables a simple interface for clients in addition to the high degree of decoupling between the publishers and subscribers. To achieve high-throughput, the current state of the art implements a Shared Dictionary Compression for Publish-subscribe (SSPS). However, the present implementation of SSPS is on a centralized broker.
+
+In a Simple Shared Dictionary Compression for Publish-subscribe, the component Sampling Broker (SB) is responsible for the creation of the dictionaries, observing the compression ratio and maintaining the dictionary. However one of the major drawback is that the broker is a centralized entity and hence it is prone to all the drawbacks of a centralized system like single point failure, limited scalability and so on.
+
+In this thesis, we implement the SSPS on a distributed broker called Apache ActiveMQ Artemis.
+An extension is developed for Apache ActiveMQ Artemis which overcomes the disadvantages of the current SSPS. The working of SSPS is demonstrated by an Android application.
+
 
 
