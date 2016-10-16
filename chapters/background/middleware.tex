@@ -1,6 +1,8 @@
 \section{Middleware}
 
-"Middleware is a computer software that provides services to software applications beyond those available from the operating system" \parencite{middleware_wiki}. For software developers to focus on the specific purpose of the application, middleware makes implementation of input/output and communication easier.
+Middleware is a software layer between software applications and operating systems that provide services to the applications apart from the ones available from the operating systems \parencite{middleware_wiki}. For software developers to focus on the specific purpose of the application, middleware makes implementation of input/output and communication easier.
+
+
 
 In the context of distributed systems, middleware is responsible for communication and management of data among the nodes. It simplifies various systems that support application development and delivery like web servers, messaging systems, application servers and other similar systems. The primary purpose of a middleware system is to provide the abstraction for the complex interaction that takes between heterogeneous nodes in a distributed system. The complexity of services such as concurrency, location, naming and service discovery are hidden from the application layer. It does so by providing a common Application Programming  Interface. Figure \ref{figures:middleware} depicts a typical high-level design of the involvement of middleware in a distributed systems scenario.
 
@@ -10,7 +12,7 @@ In the context of distributed systems, middleware is responsible for communicati
 
 \begin{figure}[t!]
 \centering
-\includegraphics[keepaspectratio, width=.6\textwidth]{middleware.pdf}
+\includegraphics[keepaspectratio, width=.6\textwidth, trim={0 7cm 0 6cm},clip]{middleware.eps}
 \caption{Middleware}\label{figures:middleware}
 \end{figure}
 
