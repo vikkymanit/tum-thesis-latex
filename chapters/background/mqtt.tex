@@ -1,1 +1,32 @@
 \section{MQTT}
+
+MQTT is a lightweight messaging protocol and an ISO standard \parencite{mqtt_wiki}. It is a publish-subscribe based protocol for use on top TCP/IP. For non-TCP/IP networks used by embedded devices there exist a variant of MQTT called \textit{MQTT-SN} typically used in Wireless Sensor Networks (WSN) \parencite{4554519}. It is best suited for connections where the network bandwidth is limited. It was created by Dr. Andy Stanford-Clark and Arlen Nipper in the year 1999 \parencite{mqtt_faq}. The latest version of the protocol is V3.1. 
+
+\subsection{MQTT methods}
+
+MQTT defines methods to perform actions on selected resources. The representation of the resources depends on the implementation of the server. The resource could be a file or outside from any executable on the server.
+
+Below are the methods defined by MQTT:
+
+\begin{itemize}
+    \item\textbf{Connect:}
+        Waits for the MQTT client to establish a connection with the server.
+
+    \item\textbf{Disconnect:}
+        Waits till the MQTT client completes its work and for the session to disconnect.
+
+    \item\textbf{Subscribe:}
+        Waits for the subscription to complete.
+
+    \item\textbf{UnSubscribe:}
+        Asks the server to unsubscribe a client from one or multiple topics.
+
+    \item\textbf{Publish:}
+        Passes the request to the MQTT client.
+
+\end{itemize}
+
+\subsection{Security}
+
+The latest version of the MQTT protocol supports authentication by passing username and password. It also supports encryption over the network via SSL. However, as SSL is not a very light weight it adds a considerable amount of overhead. One way to avoid this is to encrypt the data thats is transmitted but this is not native to the protocol.
+

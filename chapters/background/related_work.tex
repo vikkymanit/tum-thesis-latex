@@ -1,0 +1,47 @@
+\section{Related Work}
+
+To the best of our knowledge, the only work that has been done in the area of Shared Dicitonary Compression (SDC) within publish-subscribe model is \textit {SDC for Publish-Subscribe (SSPS)} \parencite{Doblander:2016:SDC} which has the implementation on a centralized broker. Another similar work \textit {Publish/Subscribe for Mobile Applications using Shared Dictionary Compression} \parencite{sdcdemo} is by three of the authors of SSPS. Expanding the scope outside publish-subscribe we find early works like \textit{Shared Dictionary Compression for HTTP (SDCH)} \parencite{sdch} and \textit{Dictionary Compression for a Scan-Based, Main-Memory Database System} \parencite{sdc_db}. We will discuss these work briefly in this section. 
+
+\subsection{Shared Dictionary Compression for HTTP}
+
+Four employees at Google proposed SDCH in the year 2008. It is an HTTP/1.1 compatible extension aimed at reducing required bandwidth via the use of shared dictionary between the client and the server.
+Currently, browsers like Google Chrome and other Chromium based browsers support SDCH.
+
+The idea was to is to mine the common strings/phrases that occur across contents of multiple pages and also the similarities in the CSS, JavasSript code, etc., in many websites.  Once the elements that are common are downloaded, a dictionary is created using those elements. This dictionary is made available to both the browser and the server. Once done, the server can replace the long values using short notations referring the dictionary. On the other end, the browser uses the same dictionary to interpret the short notations and get the long values. 
+
+The important considerations are that the browser and the server both must support SDCH and at any instant both must have the same version of the dictionary. If the browser and server refer to different versions of the dictionary, then this would result in a broken page. The conditions for SDCH between the browser and the server are done through GET requests by the browser.
+
+LinkedIn tried the SDCH for their site \parencite{sdc_linkedin}. For the creation of dictionaries they used the open-source solution \textit{Femtozip} by Garrick Toubassi. They pretend the header of the dictionary for the browser to know the right domain and paths for which the dictionary could be used. 
+
+The initial results obtained by LinkedIn demonstrated a remarkable compression ratio of 81\% when SDCH and gzip were combined compared only to gzip for certain files. The result was based on two dictionaries, one for 6225 Javascript files and another one for 1282 CSS files. 
+
+\subsection{Dictionary Compression for a Scan-Based, Main-Memory Database System}
+
+This was a master thesis of Janick Bernet at ETH Zurich. The goal was to obeserve the effect of dictionary based compression in a in-memory row-store called Crescando \parencite{crescando} without breaking the predictability and scalability that Crescando provides. It mainly highlights the space savings achieved due to the dictionary based compression.
+
+The dictionary was based on the key-value pairs. A bidirectional data structure called bidi-map (developed as part of the thesis) which provides sub-linear access in both directions was used. The data structure bidi-map was cache-conscious and had low memory footprint. 
+
+The result showed a 35\% space-savings on segment size of 1Gb on a real world data set from Amadeus. However, there was not significant performance difference with or without compression. 
+
+\subsection{Shared Dictionary Compression in Publish/Subscribe}
+
+This was a recent work in June 2016 in which Shared Dictionary Compression was used in the realm of the publish-subscribe model. It is called SDC for Publish-Subscribe (SSPS). It was developed at Informatics department at the Technical University of Munich. The basic idea is to mine the similarities between notifications to build a dictionary that could be shared among the publisher and subscriber. Once both the publisher and subscriber have the dictionary, then they can exchange messages that are compressed using the dictionary.
+
+Just like in SDCH, the open-source solution FemtoZip by Garrick Toubassi is used to create the dictionary. The SDC here is a combination of a dictionary and multiple passes of Huffman Coding. Using this method, the references to the dictionary are represented very efficiently.
+
+The method introduces a new entity called the Sampling Broker (SB) which is responsible for sampling notifications to create dictionaries, maintaining the dictionary and spreading the dictionary to the publishers and subscribers. This entity can either be a part of the broker or can be a separate system. 
+
+Unlike in SDCH where the dictionaries are generated upfront, in SSPS the dictionaries are created on the fly when the communication occurs. Initially, the publisher publishes standard uncompressed messages to the broker. The sampling broker gathers these messages and constructs the first dictionary which is then sent to both the publisher and subscriber. Once both the parties have the dictionary, the publisher starts to use the dictionary to compress messages and publishes the compressed message. Since the same dictionary is available with the subscriber, it uses the dictionary to decompress the messages.
+
+The SB has an adaptive algorithm running which observes the compression ratio and bandwidth savings and generates new dictionaries as and when required to maintain the bandwidth savings. We would describe the adaptive algorithm in detail in section 5, as this thesis work is an extension of the SSPS and will be using the same adaptive algorithm. 
+
+The dictionaries are also cached so that whenever new subscribers or publishers join, they receive the dictionary. The protocol used for the prototype here was MQTT. In order, to distinguish between the compressed or uncompressed messages the first byte of the MQTT payload contained a code that indicated not only whether the message was compressed or uncompressed but also which version of the dictionary was used by the publisher to compress the message. This is very crucial because a message can be decompressed only using the same dictionary which was used to compress the message. 
+
+The result of this work demonstrated an increase in the throughput on limited 2G bandwidth. The dataset used was DEBS15. The experiment evaluation claims a decrease of 40\% in time required to send 5000 messages using SDC.
+
+
+\subsection{Publish/Subscribe for Mobile Applications using Shared Dictionary Compression}
+
+This work is a demonstration of SSPS described previously for mobile applications. The approach of generation and sharing of the dictionary between publisher and subscriber is same as in SSPS.
+
+The protocol and dataset used here is also same as the one in SSPS. The result here demonstrated bandwidth savings up to 88\%. The result included the overhead of transmitting the dictionary.
