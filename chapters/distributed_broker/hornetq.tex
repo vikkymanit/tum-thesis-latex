@@ -1,0 +1,5 @@
+\subsection{HornetQ}
+
+HornetQ is a high performance, multi-protocol, clustered, embeddable, asynchronous messaging system from JBoss \parencite{giacomelli2012hornetq}. The work on HornetQ was started by Tim Fox in 2007, and it was released two years later. It is written in Java and provides support for both JMS 1.1 and JMS 2.0 APIs. 
+
+Like with most systems, HornetQ also packs many features \parencite{hornetq_features}. In terms of multi-protocol HornetQ supports only STOMP and AMQP. It provides its own core API that can be used instead of JMS. However, the API is only available for Java and not any other language. It provides high availability both using the replication of data store and also via shared file system. It supports clustering to deal with load balancing. For persistence, HornetQ relies on its own high performance journal than relying on slow relational databases. The journal could be either Java NIO or Linux Asynchronous IO (AIO). HornetQ provides REST support in order for clients written in different languages to access natively. HornetQ provides management API to monitor and manage servers \parencite{hornetq_official_site}.

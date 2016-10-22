@@ -1,0 +1,50 @@
+\section{Comparison}
+
+The comparisons are based on our understanding of these systems from the knowledge gathered from the official documentation and articles over the Internet \parencite{broker_compr} \parencite{eriksson2016comparing} \parencite{broker_performance} \parencite{broker_explore} \parencite{broker_mq}. As per our knowledge, there exist no direct comparison of all the five systems.
+
+\subsubsection{Scalability and Reliability}
+
+Since we are looking at distributed brokers here, all the brokers are inherently scalable. All of them support clustering. Similarly, when it comes to reliability, all the brokers are reliable as every one of them support master-slave replication. Table \ref{table:comparison} lists the ways in which the brokers can handle replication. Data synchronization refers to some form of synchronization between master and slave. It might be using some kind of logs or message store. In shared storage both master and slave share the same data directory using shared file system, the same case is in shared database.
+
+\begin{table}[h]
+  \centering
+  \caption{Replication in brokers}
+  \label{table:comparison}
+  \begin{tabular}{ccc}
+    \toprule
+    System & Replication\\
+    \midrule
+    Apache Kafka & Data synchronization\\
+    RabbitMQ & Data synchronization \\
+    HornetQ & Data synchronization or Shared storage \\
+    Apache ActiveMQ Artemis & Data synchronization or Shared Storage\\
+    Apache ActiveMQ & Data synchronization or Shared storage or Shared database\\
+    \bottomrule
+  \end{tabular}
+\end{table} 
+
+\subsubsection{Performance}
+
+It is tough to get a statistical comparison of all five the systems, the reason being the configuration, features, and different protocols. Almost, every broker praise about their performance. Many claim to be the fastest but this valid only for short span and specific scenario. For example, \parencite{rabbitmq_perf} shows the performance for HornetQ far superior to ActiveMQ. Another article \parencite{broker_kafka_rabbit_activemq} shows Kafka being superior to ActiveMQ and RabbitMQ.
+
+So the selection criteria comes to the purpose and application for which the broker is intended to be used. Kafka is suitable for streaming applications. RabbitMQ is good for advanced messaging pattern involving routing and load balancing. ActiveMQ is good in performing without persistence \parencite{broker_queue_comp}. ActiveMQ Artemis has its own charm as having combined features of HornetQ and ActiveMQ.
+
+\subsubsection{Messaging Protocol}
+
+Different brokers support a different set of protocols. Some support standard protocols and some like Apache Kafka have their own custom protocol. Table \ref{table:comparison_protocol} lists the protocols that are supported by different brokers.
+\begin{table}[h!]
+  \centering
+  \caption{Protocol support in brokers}
+  \label{table:comparison_protocol}
+  \begin{tabular}{cc}
+    \toprule
+    Broker & Protocols \\
+    \midrule
+    Apache ActiveMQ & OpenWire, STOMP, AMQP, MQTT \\
+    HornetQ & STOMP, AMQP \\
+    Apache Kafka & Custom binary protocol \\
+    RabbitMQ & STOMP, AMQP, MQTT \\
+    Apache ActiveMQ Artemis & OpenWire, STOMP, AMQP, MQTT \\
+    \bottomrule
+  \end{tabular}
+\end{table} 

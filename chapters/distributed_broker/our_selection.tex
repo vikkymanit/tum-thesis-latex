@@ -1,0 +1,7 @@
+\section{Our Selection}
+
+Our selection of the broker for the prototypical implementation of the SSPS on a distributed broker was based on two criteria. One being the language in which the broker was written and second being the MQTT protocol as SSPS was designed around MQTT.
+
+We decided to choose \textit{Apache ActiveMQ Artemis} as it contained the features of both HornetQ and ActiveMQ. HornetQ is already donated to Apache Software Foundation under the codename Artemis. ActiveMQ Artemis will eventually be replacing ActiveMQ, and thus it makes sense to pick the latest system. We eliminated Apache Kafka because it only supports its custom binary protocol. We ruled out RabbitMQ because it's written in Erlang which is entirely new to us and our language expertise was Java.
+
+

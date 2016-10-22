@@ -1,0 +1,9 @@
+\subsection{Apache ActiveMQ Artemis}
+
+Apache ActiveMQ Artemis is another open source messaging system from Apache Software Foundation \parencite{artemis_home}. It is written in Java. It is an asynchronous, high-performance, multi-protocol, clustered and embeddable system. The current version of ActiveMQ Artemis is 1.4.0.
+
+Apache ActiveMQ Artemis system should not be confused with Apache ActiveMQ. The code base of HornetQ was donated to the Apache Software Foundation under the codename \textit{Artemis}. Although it is possible that Artemis would become the successor to ActiveMQ eventually, however a final decision is not yet made as per the ActiveMQ board report \parencite{artemis_vs_activemq}.
+
+Apache ActiveMQ Artemis has support for multiple protocols such as AMQP, MQTT. STOMP and OpenWire. Unlike Apache ActiveMQ, Apache ActiveMQ Artemis provides support for both JMS 1.1 and JMS 2.0. It provides high availability both via replication (non-shared store) and shared store like SAN. It supports clustering for load balancing. For replication, it relies on its own high-performance journal either Java NIO or Java NIO or Linux Asynchronous IO (AIO) rather than any database. It also provides a REST interface for leveraging the scalability and reliability features over a simple interface (REST/HTTP). It provides a management API to manage and interact and can be done over JMS, JMX and core protocol.
+
+From the description and features of Apache ActiveMQ and HornetQ, it can easily be observed that Apache ActiveMQ Artemis packs many useful features from the both the systems. The union between the HornetQ and Apache ActiveMQ community aims to provide a path for the next generation of the message broker. 
