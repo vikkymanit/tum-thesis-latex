@@ -20,5 +20,78 @@
   columns=fullflexible,
   autogobble,
   keywordstyle=\bfseries\color{MediumBlue},
-  stringstyle=\color{DarkGreen}
+  stringstyle=\color{DarkGreen},
+  captionpos=b
+}
+
+\definecolor{light-gray}{gray}{0.95}
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+
+\lstdefinestyle{BashInputStyle}{
+  language=bash,
+  basicstyle=\small\sffamily,
+  % numbers=left,
+  % numberstyle=\tiny,
+  % numbersep=3pt,
+  frame=tb,
+  columns=fullflexible,
+  backgroundcolor=\color{light-gray},
+  linewidth=0.9\linewidth,
+  xleftmargin=0.1\linewidth,
+  breakatwhitespace=false,
+  breaklines=true,
+  postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}}
+}
+
+\lstdefinestyle{XmlInputStyle}{
+  language=XML,
+  basicstyle=\small\sffamily,
+  % numbers=left,
+  % numberstyle=\tiny,
+  % numbersep=3pt,
+  frame=tb,
+  columns=fullflexible,
+  backgroundcolor=\color{light-gray},
+  linewidth=0.9\linewidth,
+  xleftmargin=0.1\linewidth,
+  breakatwhitespace=false,
+  breaklines=true,
+  postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}},
+  tagstyle=\color{darkblue},
+  morekeywords={broadcast-groups,broadcast-group,group-port}
+}
+
+\lstdefinestyle{JavaInputStyle}{
+  language=Java,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=3pt,
+  frame=tb,
+  columns=fullflexible,
+  backgroundcolor=\color{light-gray},
+  linewidth=0.9\linewidth,
+  xleftmargin=0.1\linewidth,
+  showspaces=false,
+  showtabs=false,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=false,
+  commentstyle=\color{pgreen},
+  keywordstyle=\color{pblue},
+  stringstyle=\color{pred},
+  basicstyle=\ttfamily,
+  moredelim=[il][\textcolor{pgrey}]{$$},
+  moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
+}
+
+\lstdefinestyle{Tree}{
+  basicstyle=\small\sffamily,  
+  frame=tb,
+  columns=fullflexible,
+  backgroundcolor=\color{light-gray},
+  linewidth=0.9\linewidth,
+  xleftmargin=0.1\linewidth
 }

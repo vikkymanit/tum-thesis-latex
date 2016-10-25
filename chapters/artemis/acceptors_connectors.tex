@@ -1,0 +1,19 @@
+\section{Acceptors and Connectors}
+
+Acceptors and connectors define how an Apache ActiveMQ Artemis server accepts a connection and how clients can connect to an Apache ActiveMQ Artemis server respectively.
+
+Both acceptors and connectors have to be configured in the \textit{broker.xml} file. Listing \ref{lst:acceptor} and \ref{lst:connector} shows example for configuring a acceptor and a connector respectively.
+
+\bigskip
+\begin{lstlisting}[style=XmlInputStyle,caption=Configuring Acceptor Example, label={lst:acceptor}]
+<acceptors>
+   <acceptor name="netty">tcp://localhost:61616</acceptor>
+</acceptors>
+\end{lstlisting}
+
+\bigskip
+\begin{lstlisting}[style=XmlInputStyle,caption=Configuring Connector Example, label={lst:connector}]
+<connectors>
+   <connector name="netty">tcp://localhost:61616</connector>
+</connectors>
+\end{lstlisting}

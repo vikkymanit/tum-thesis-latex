@@ -1,0 +1,62 @@
+\section{High Availability and Failover}
+
+The ability of a system to continue operating after one or more failure of the servers is referred to as high availability. Failover being a part of high availability is the ability of the client applications to continue operating by migrating from one server to another when a server fails.
+
+\subsection{Live - Backup Groups}
+Apache ActiveMQ Artemis provides failure by allowing servers to be linked as live-backup pairs. A live server can have many backup servers. When the live server fails, one of the backup server takes over the live server. Apache ActiveMQ Artemis provides two different ways to achieve successful failover; one is data replication, and the other is shared storage.
+
+\subsection{Data Replication}
+
+When replication is used, the live and the backup servers do not share the same persistent directories such as paging, large messages, bindings and journal directories. All the synchronization happens over the network during normal operations. Thus, the data on the live server is replicated on the backup servers. 
+
+The synchronization of data between the live and backup servers happens in parallel to the normal operation, and thus it does not cause blocking on connected clients. When the live server fails, the backup server needs to synchronize all the data from the live server before it takes over the live server. The time for synchronization depends on the amount of data and the connection speed. 
+
+The configuration for using replication is defined in the \textit{broker.xml} file. Listing \ref{lst:dr_master} represents the configuration of shared storage for the master server. Listing \ref{lst:dr_slave} represents the configuration of shared storage for backup servers.
+
+\bigskip
+\noindent\begin{minipage}{.45\columnwidth}
+\begin{lstlisting}[style=XmlInputStyle,caption=HA replication master, label={lst:dr_master}]
+<ha-policy>
+   <replication>
+      <master/>
+   </replication>
+</ha-policy>
+\end{lstlisting}
+\end{minipage}\hfill
+\begin{minipage}{.45\columnwidth}
+\begin{lstlisting}[style=XmlInputStyle,caption=HA replication slave, label={lst:dr_slave}]
+<ha-policy>
+   <replication>
+      <slave/>
+   </replication>
+</ha-policy>
+\end{lstlisting}
+\end{minipage}
+
+\subsection{Shared Storage}
+
+When shared storage is used, both the live and the backup servers (slaves) share the same data directories such as paging, large messages, bindings and journal directories using a shared file system. When a live server fails, the backup server takes over by loading the required files from the shared file system. The clients can then connect to it. Typically some high-performance Storage Area Network (SAN) is used.
+
+One advantage of using shared storage is that there is no overhead of replication during the normal operation. However, this also becomes a disadvantage as the backup server needs to load all the data from the shared storage.
+
+The configuration for using shared storage is defined in the \textit{broker.xml} file. Listing \ref{lst:ss_master} represents the configuration of shared storage for the master server. Listing \ref{lst:ss_slave} represents the configuration of shared storage for backup servers.
+
+\bigskip
+\noindent\begin{minipage}{.45\columnwidth}
+\begin{lstlisting}[style=XmlInputStyle,caption=HA Shared storage master, label={lst:ss_master}]
+<ha-policy>
+   <shared-store>
+      <master/>
+   </shared-store>
+</ha-policy>
+\end{lstlisting}
+\end{minipage}\hfill
+\begin{minipage}{.45\columnwidth}
+\begin{lstlisting}[style=XmlInputStyle,caption=HA Shared storage slave, label={lst:ss_slave}]
+<ha-policy>
+   <shared-store>
+      <slave/>
+   </shared-store>
+</ha-policy>
+\end{lstlisting}
+\end{minipage}

@@ -1,0 +1,58 @@
+
+\section{Clusters}
+
+Clusters allow load sharing among the Apache ActiveMQ Artemis servers. Each node that is active manages its own connections and messages. Clusters can be formed in different topologies such as symmetric cluster and chain cluster.
+
+A cluster can be formed by each node in the cluster configuring cluster connections to other nodes in the main configuration file \textit{broker.xml}. An internal core bridge is created when node forms a cluster with another node. These connections allow the messages to flow among the nodes to balance the load among the nodes in the cluster. 
+
+
+\subsection{Server discovery}
+
+In a cluster, the nodes need to propagate their connection details to other nodes. This is done via server discovery. Server discovery can be done either using UDP multicast or JGroups.
+
+\subsubsection{Broadcast Groups}
+
+The way in which a server or client can connect to another server is defined by a connector. The means used by a server to broadcast connectors are called broadcast groups. Broadcast groups are defined in the \textit{broker.xml} configuration file. Listing \ref{lst:broadcast} shows an example of broadcast group by the name \textit{bg-group1}. The group address and the port form the multicast address to which the data will be broadcast. The period between successive broadcasts is set 1000 milliseconds and the connector used is netty-connector \parencite{netty}.
+
+\bigskip
+\begin{lstlisting}[style=XmlInputStyle,caption=Broadcast Group Example, label={lst:broadcast}]
+      <broadcast-groups>
+         <broadcast-group name="bg-group1">
+            <group-address>${udp-address:231.7.7.7}</group-address>
+            <group-port>9876</group-port>
+            <broadcast-period>1000</broadcast-period>
+            <connector-ref>netty-connector</connector-ref>
+         </broadcast-group>
+      </broadcast-groups>
+\end{lstlisting}
+
+\subsubsection{Discovery Groups}
+
+The way in which the broadcast endpoint receives the connector information is defined by discovery groups. A discovery group keeps a list of entries of connectors for each server from which it receives the broadcast information. This is updated as and when new broadcast information is received. A server entry is deleted if the broadcast information from that server is not received before the timeout period. Similar to broadcast groups, discovery groups are also defined in the \textit{broker.xml} configuration file. Listing \ref{lst:discovery} shows an example of a discovery group by the name \textit{dg-group1}. The group address and the port form the multicast address to listen on. A refresh timeout of 5000 milliseconds is set. This indicates the period a discovery group waits after the previous broadcast from a server before removing the server from its list of entries.
+
+\bigskip
+\begin{lstlisting}[style=XmlInputStyle,caption=Discovery Group Example, label={lst:discovery}]
+      <discovery-groups>
+         <discovery-group name="dg-group1">
+            <group-address>${udp-address:231.7.7.7}</group-address>
+            <group-port>9876</group-port>
+            <refresh-timeout>5000</refresh-timeout>
+         </discovery-group>
+      </discovery-groups>
+\end{lstlisting}
+
+\subsection{Cluster connection configuration}
+
+For load balancing between the nodes of a cluster, cluster configuration has to be defined in the \textit{broker.xml} file.
+Listing \ref{lst:connection} shows an example of a cluster configuration. A cluster connection with name my-cluster is defined for the address that matches the string "jms". The connector used is netty-connector and the Listing \ref{lst:discovery} discovery group is used.
+
+\bigskip
+\begin{lstlisting}[style=XmlInputStyle,caption=cluster connection configuration Example, label={lst:connection}]
+      <cluster-connections>
+         <cluster-connection name="my-cluster">
+            <address>jms</address>
+            <connector-ref>netty-connector</connector-ref>
+            <discovery-group-ref discovery-group-name="dg-group1"/>
+         </cluster-connection>
+      </cluster-connections>
+\end{lstlisting}

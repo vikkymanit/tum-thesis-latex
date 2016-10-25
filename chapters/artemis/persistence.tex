@@ -1,0 +1,42 @@
+\section{Persistence}
+
+Apache ActiveMQ Artemis comes with a high-performance journal that is used for persistence. This file journal is highly optimized for storage and offers excellent performance.
+
+Journals in Apache ActiveMQ Artemis are append only journals. It is a set of files. Each of the files is pre-created by a fixed size and filled with padding initially. As and when operations are performed such as adding a message, deleting a message, update a message, records are appended in the journal. When a journal is full, the operations are done on the next journal.
+
+Using a sophisticated garbage collection algorithm Apache ActiveMQ Artemis determines when a particular journal is no longer needed. Journals are compacted using the compaction algorithm of Apache ActiveMQ Artemis which removes dead space from the journal.
+
+\subsection{Journal Implementations}
+
+Apache ActiveMQ Artemis has two implementations of the journal.
+
+\subsubsection{Java NIO}
+
+This implementation offers very good performance and runs on any platform having JRE 6 and above. It uses the Java NIO to interface with the file system.
+
+\subsubsection{Linux Asynchronous IO}
+
+This implementation typically provides better performance than Java NIO implementation of the journal. It uses a native wrapper to the talk to Linux Asynchronous IO library (AIO). However, this runs only on Linux kernel 2.6 and above. 
+
+\subsection{Journals}
+
+All the journals are configured in the \textit{broker.xml} file located in the Apache ActiveMQ broker instance.
+
+\subsubsection{Bindings journal}
+
+This journal stores bindings information like the set of queues and their attributes that are deployed on Apache ActiveMQ Artemis server. This journal is comparatively slower than message journal. It is always Java NIO journal. These journal files have the file extension as \textit{bindings}.
+
+\subsubsection{JMS journal}
+
+This journal is only created if JMS is used. It stores all the JMS-related data such as topics, queues and connection factories. Any JMS resources created through the management API is also stored here. These journal files have file extension as \textit{jms} extension.
+
+\subsubsection{Message journal}
+
+As the name suggests this journal stores the message data and duplicate-id caches. By default, the server tries to use AIO journal and switches to NIO journal if the AIO is not available. These journal files have file extension as \textit{amq} extension.
+
+\subsubsection{Large message and Paging}
+Apache ActiveMQ Artemis persists large messages outside the message journal in a separate directory called \textit{large-messages}. In the case of low memory situations, Apache ActiveMQ Artemis provides an option to enable paging to page messages.
+
+\subsubsection{Zero Persistence}
+
+In certain scenarios, if required Apache ActiveMQ Artemis can also be configured to use zero persistence. If this is set, then no data such as binding information, message data, large messages and paging will be persisted. 

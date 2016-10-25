@@ -1,0 +1,74 @@
+\section{Using JMS}
+
+In addition to the JMS agnostic API Apache ActiveMQ Artemis provides a JMS API for messaging. Many users are more comfortable using JMS as it is a very popular API messaging standard. In this section, we explain on how to use JMS with Apache ActiveMQ Artemis using a simple example. The example has one JMS queue named \textit{exampleQueue}, a single message producer named \textit{MessageProducer} that sends a message to the queue and a single consumer called \textit{MessageConsumer} consuming the message from the queue.
+
+\subsection{JNDI Configuration}
+
+As per the JMS specification the administered objects such as the JMS queue, topic and connection factory instances has to be made available by the JNDI API. The configurations are specified in a file name \textit{jndi.properties} which needs to be added to the classpath of the project.
+
+\subsubsection{ConnectionFactory JNDI}
+
+A client uses the connection factory to make connections to the server by knowing the server location and other configuration parameters. 
+
+Different connection factories can be used \parencite{jms_cf}. Listing \ref{lst:factory_jndi} shows an example where an ActiveMQInitialContextFactory connection factory type is used and tcp connection to localhost is provided along with the port number 61616.
+
+\bigskip
+\begin{lstlisting}[style=BashInputStyle,caption=ConnectionFactory JNDI, label={lst:factory_jndi}]
+java.naming.factory.initial=org.apache.activemq.artemis.jndi.ActiveMQInitialContextFactory
+connectionFactory.ConnectionFactory=tcp://localhost:61616
+\end{lstlisting}
+
+\subsubsection{Destination JNDI}
+
+Just like connection factories JMS destinations can also be configured via JNDI. It is a name-value entry. The pattern for the name to be followed is \textit{topic.<jndi-binding>} or \textit{queue.<jndi-binding>}. The value is the name of the queue. 
+
+Listing \ref{lst:queue_jndi} shows an example by extending the Listing \ref{lst:factory_jndi} example. In this example the binding takes place to the queue named \textit{exampleQueue} hosted on the Apache ActiveMQ Artemis server, specified in the broker.xml file as \textit{<queue name="exampleQueue"/>}. 
+
+\bigskip
+\begin{lstlisting}[style=BashInputStyle,caption=ConnectionFactory JNDI, label={lst:queue_jndi}]
+java.naming.factory.initial=org.apache.activemq.artemis.jndi.ActiveMQInitialContextFactory
+connectionFactory.ConnectionFactory=tcp://localhost:61616
+queue.queues/exampleQueue=exampleQueue
+\end{lstlisting}
+
+\subsection{Example code}
+
+Listing \ref{lst:factory_jndi} describes the final code for our example.
+
+\bigskip
+\begin{lstlisting}[style=JavaInputStyle,caption=Example JMS code, label={lst:code}]
+
+//Create a JNDI initial context to lookup JMS objects
+InitialContext initialContext = new InitialContext();
+
+//Look up the connection factory to create connections to localhost:61616
+ConnectionFactory connectionFactory = (ConnectionFactory)initialContext.lookup("ConnectionFactory");
+
+//Look up the Queue
+Queue orderQueue = (Queue)initialContext.lookup("queues/exampleQueue");
+
+//Use the connection factory to crete a JMS connection
+Connection connection = connectionFactory.createConnection();
+
+//Create a JMS session with auto acknowledge mode.
+Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+
+//Create a message producer to send messages to the queue
+MessageProducer messageProducer = session.createProducer(exampleQueue);
+
+//Create a message consumer to receive/consume messages from the queue
+MessageConsumer messageConsumer = session.createConsumer(exampleQueue);
+
+//start the connection
+connection.start();
+
+//Send a simple text message
+TextMessage textMessage = session.createTextMessage("This is an example message");
+messageProducer.send(textMessage);
+
+//Receive or consume the message
+TextMessage receivedMessage = (TextMessage)messageConsumer.receive();
+
+//Print the message
+System.out.println("Received message: " + receivedMessage.getText());
+\end{lstlisting}

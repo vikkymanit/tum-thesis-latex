@@ -1,0 +1,93 @@
+\section{Using the server}
+
+\subsubsection{Installation}
+
+The source code of Apache ActiveMQ Artemis can be downloaded from its repository \parencite{artemis_github}. After downloading the project, it can be build using the commands in Listing \ref{lst:build}.
+
+\bigskip
+\begin{lstlisting}[style=BashInputStyle,caption=Building Apache ActiveMQ Artemis, label={lst:build}]
+  $ mvn -Prelease install
+\end{lstlisting}
+
+Once the build is complete, the distribution is located under the folder \textit{artemis-distribution}.
+The distribution contains the relevant folders shown in Listing \ref{lst:tree}.
+
+\begin{lstlisting}[style=Tree,caption=Apache ActiveMQ Artemis Folders, label={lst:tree}]
+         |___ bin
+         |
+         |___ web
+         |
+         |___ examples
+         |
+         |___ lib
+         |
+         |___ schema
+\end{lstlisting}
+
+\begin{itemize}
+    \item \textbf{bin:}
+        Contains scripts and binaries to run the system.
+
+    \item \textbf{web:}
+        Location where the web context is loaded when the system runs.
+
+    \item \textbf{examples:}
+        Contains many example programs.
+
+    \item \textbf{lib:}
+        Contains required libraries and jars.
+
+    \item \textbf{schema:}
+        Contains XML schemas for validating configuration files..
+         
+\end{itemize}
+
+
+\subsubsection{Creating a Broker Instance}
+
+To create a broker instance by the name testbroker from the Artemis distribution navigate to the \textit{bin} directory and execute the  command in Listing \ref{lst:create}. 
+
+\bigskip
+\begin{lstlisting}[style=BashInputStyle,caption=Creating Broker Instance, label={lst:create}]
+  $ ./artemis create testbroker
+\end{lstlisting}
+
+The following folders will appear under the created broker directory.
+
+\begin{itemize}
+    \item \textbf{bin:}
+        Contains executables related to the broker instance.
+
+    \item \textbf{etc:}
+        Contains configuration files.
+
+    \item \textbf{data:}
+        Contains files used for storage of persistent messages.
+
+    \item \textbf{log:}
+        Contains log files.
+
+    \item \textbf{tmp:}
+        Contains any temporary files.
+         
+\end{itemize}
+
+\subsubsection{Main configuration file}
+
+Under the directory \textit{etc} a file named \textit{broker.xml} is the main configuration file that is used by the Apache ActiveMQ core server. 
+
+\subsubsection{Starting and Stopping a Broker Instance}
+
+To start the broker instance navigate to the \textit{bin} directory of the broker instance and execute the command in Listing \ref{lst:start}.
+
+\bigskip
+\begin{lstlisting}[style=BashInputStyle,caption=Starting Broker Instance, label={lst:start}]
+  $ ./artemis run
+\end{lstlisting}
+
+To stop the broker instance the same \textit{artemis} script is used but with a stop argument. Listing \ref{lst:stop} is an example.
+
+\bigskip
+\begin{lstlisting}[style=BashInputStyle,caption=Stopping Broker Instance, label={lst:stop}]
+  $ ./artemis stop
+\end{lstlisting}
