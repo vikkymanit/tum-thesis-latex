@@ -1,7 +1,7 @@
 
 \section{Clusters}
 
-Clusters allow load sharing among the Apache ActiveMQ Artemis servers. Each node that is active manages its own connections and messages. Clusters can be formed in different topologies such as symmetric cluster and chain cluster.
+Clusters allow load sharing among the Apache ActiveMQ Artemis servers \parencite{artemis_clusters}. Each node that is active manages its own connections and messages. Clusters can be formed in different topologies such as symmetric cluster and chain cluster.
 
 A cluster can be formed by each node in the cluster configuring cluster connections to other nodes in the main configuration file \textit{broker.xml}. An internal core bridge is created when node forms a cluster with another node. These connections allow the messages to flow among the nodes to balance the load among the nodes in the cluster. 
 

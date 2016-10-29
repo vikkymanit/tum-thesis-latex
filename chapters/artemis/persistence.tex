@@ -1,6 +1,6 @@
 \section{Persistence}
 
-Apache ActiveMQ Artemis comes with a high-performance journal that is used for persistence. This file journal is highly optimized for storage and offers excellent performance.
+Apache ActiveMQ Artemis comes with a high-performance journal that is used for persistence \parencite{artemis_persistence}. This file journal is highly optimized for storage and offers excellent performance.
 
 Journals in Apache ActiveMQ Artemis are append only journals. It is a set of files. Each of the files is pre-created by a fixed size and filled with padding initially. As and when operations are performed such as adding a message, deleting a message, update a message, records are appended in the journal. When a journal is full, the operations are done on the next journal.
 

@@ -1,10 +1,10 @@
 \section{Intercepting Operations}
 
-To intercept packets coming into the server or going out of the server, Apache ActiveMQ Artemis provides \textit{interceptors}. Interceptors allow the packets to be modified or inspected. Interceptors are dependent on the protocol for, e.g., to intercept MQTT packets MQTTInterceptor interface has to be used by the classes that need to intercept the packets. 
+To intercept packets coming into the server or going out of the server, Apache ActiveMQ Artemis provides \textit{interceptors} \parencite{artemis_interceptors}. Interceptors allow the packets to be modified or inspected. Interceptors are dependent on the protocol for, e.g., to intercept MQTT packets MQTTInterceptor interface has to be used by the classes that need to intercept the packets. 
 
 Interceptors are of two types, incoming interceptors, and outgoing interceptors. Both interceptors are configured in the \textit{broker.xml} file.
 
-\subsubsection{Incoming Interceptor}
+\subsubsection{Incoming Interceptor} \label{subsubsection:in_interceptor}
 
 An incoming interceptor intercepts packets entering the server. Listing \ref{lst:incoming} shows example configuration of an incoming interceptor implemented by the class \textit{PropertyInterceptor}.
 

@@ -1,6 +1,6 @@
 \section{High Availability and Failover}
 
-The ability of a system to continue operating after one or more failure of the servers is referred to as high availability. Failover being a part of high availability is the ability of the client applications to continue operating by migrating from one server to another when a server fails.
+The ability of a system to continue operating after one or more failure of the servers is referred to as high availability. Failover being a part of high availability is the ability of the client applications to continue operating by migrating from one server to another when a server fails. This section describes about high availability and failover in Apache ActiveMQ Artemis \parencite{artemis_failover}.
 
 \subsection{Live - Backup Groups}
 Apache ActiveMQ Artemis provides failure by allowing servers to be linked as live-backup pairs. A live server can have many backup servers. When the live server fails, one of the backup server takes over the live server. Apache ActiveMQ Artemis provides two different ways to achieve successful failover; one is data replication, and the other is shared storage.
