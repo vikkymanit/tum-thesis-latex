@@ -1,0 +1,31 @@
+\subsection{CPU and Memory Utilization} \label{cpu}
+
+\subsubsection{Setup}
+
+For measuring CPU and memory utilization for SSPS on Apache ActiveMQ Artemis the setup remains same as the setup for examining the throughput \ref{subsubsection:throughput_setup}. Except that we no longer need to limit the bandwidth on the subscriber end as the system under test is only the broker.
+
+\subsubsection{Result}
+
+The CPU utilization was measured in detail for various events such as sending and receiving uncompressed/compressed message to/from a queue, publishing dictionary and caching dictionary. Table \ref{table:cpu_utilization} shows the events and the corresponding CPU time in milliseconds.
+
+\begin{table}[h!]
+\centering
+\caption{CPU utilization breakdown}
+\label{table:cpu_utilization}
+\begin{tabular}{ll}
+    \toprule
+    Event & Time (ms) \\
+\midrule
+    Sending uncompressed message to queue & 1.704772629 \\
+    Receiving uncompressed message from queue & 2.329559 \\
+    Sending compressed message to queue & 1.43901553 \\
+    Receiving compressed message from queue    & 1.126042145 \\
+    Sending dictionary to queue & 1.959809 \\
+    Receiving dictionary from queue & 1.199765 \\
+    Publishing dictionary & 122.71964 \\
+    Caching dictionary & 4.558563 \\
+\bottomrule
+\end{tabular}
+\end{table} 
+
+The memory utilization while running SSPS on Apache ActiveMQ Artemis was observed to be \textasciitilde62 MB.

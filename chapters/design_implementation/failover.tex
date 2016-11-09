@@ -1,0 +1,39 @@
+\subsection{High Availability and Failover} \label{subsection:failover}
+
+The ability of a system to continue operating after one or more failure of the servers is referred to as high availability. Failover being a part of high availability is the ability of the client applications to continue operating by migrating from one server to another when a server fails. Apache ActiveMQ Artemis cluster can be configured in a live-backup fashion where each live node has one or more backup server. When a live node fails, one of the backup servers takes over the live node.
+
+In the case of our implementation of SSPS for Apache ActiveMQ Artemis, the dictionary is also recovered during failover. This is achieved using durable JMS queues via JMS. Every time a dictionary is published, it is also sent to a durable queue. Durable queues survive failover, as they are replicated on all the backup nodes. When a backup node takes over the live node, it loads the dictionary from the durable queue. Thus the backup node can continue to operate receiving compressed messages since it has the dictionary.
+
+Listing \ref{lst:code_send_queue} shows the code snippet used for sending a dictionary to a durable JMS queue and Listing \ref{lst:code_receive_queue} shows the code snippet used for receiving a dictionary from the durable queue in case of a failover.
+
+\bigskip
+\begin{lstlisting}[style=JavaInputStyle,caption=Sending dictionary to a durable JMS queue, label={lst:code_send_queue}]
+private void sendDictionary(FemtoZipCompressionModel currentDictionary) throws Exception {
+
+    ...
+    dictionary = FemtoFactory.getDictionary(currentDictionary);
+    ...
+    message = session.createBytesMessage();
+    message.writeBytes(dictionary);
+    producer.send(message);
+    ...
+}
+\end{lstlisting}
+
+
+\bigskip
+\begin{lstlisting}[style=JavaInputStyle,caption=Receiving dictionary from a durable JMS queue, label={lst:code_receive_queue}]
+public void readMessageFromQueue() throws ActiveMQException {
+
+    ...
+    Message m = consumer.receive(1);
+    if (m != null) {
+        if (m instanceof BytesMessage) {
+        queueDict = new byte[(int) ((BytesMessage) m).getBodyLength()];
+        ((BytesMessage) m).readBytes(queueDict);
+        recoveredDictionaryModel = FemtoFactory.fromDictionary(queueDict));
+        recoveredDictionary = true;
+    }
+    ...
+}
+\end{lstlisting}

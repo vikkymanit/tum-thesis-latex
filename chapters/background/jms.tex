@@ -34,7 +34,7 @@ The elements of JMS are described below:
         It can be any data that is being transmitted between two or more JMS clients.
 
     \item \textbf{JMS queue:}
-        It is a staging area where the messages that are waiting to read are contained. The message can be read by only one consumer. Unlike its name \textit{queue} suggests, the messages need not received in the same order as they were sent. The JMS queue is only responsible for every message to be processed only once.
+        It is a staging area where the messages that are waiting to be read are contained. It is responsible for every message to be processed only once. The message can be read by only one consumer. Unlike its name \textit{queue} suggests, the messages need not received in the same order as they were sent. 
 
     \item \textbf{JMS topic:}
         A logical channel for multiple consumers to receive the same message sent by producers.
@@ -62,7 +62,7 @@ The elements of JMS are described below:
     \begin{figure}[h!]
     \centering
     \includegraphics[keepaspectratio, width=.7\textwidth, trim={0 8cm 0 8cm},clip]{jms_api.pdf}
-    \caption{JMS API Architecture}\label{figures:jms_api}
+    \caption{JMS API architecture}\label{figures:jms_api}
     \end{figure}
 
     Figure \ref{figures:jms_api} depicts the way the JMS components interact \parencite{jms_api}. The administrative tools do the binding between the connection factories and destinations into a JNDI namespace.
@@ -71,16 +71,12 @@ The elements of JMS are described below:
 
  \subsection {JMS API Programming Model}
 
-Figure  \ref{figures:jms_api_programming} shows how the basic building blocks of JMS interact in a JMS client application. The connection factory creates the connection object with in turn is used to create a session. As discussed before a session object can be used to create a message, message producer, and message consumer.
-
-    \makeatletter
-    \setlength{\intextsep}{20pt}
-    \makeatother
+Figure  \ref{figures:jms_api_programming} shows how the basic building blocks of JMS interact in a JMS client application. The connection factory creates the connection object which in turn is used to create a session. As discussed before a session object can be used to create a message, message producer, and message consumer.
 
     \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.5, trim={0 6cm 0 6cm},clip]{jms_api_programming.pdf}
-    \caption{JMS API Programming Model}\label{figures:jms_api_programming}
+    \caption{JMS API programming model}\label{figures:jms_api_programming}
     \end{figure}
 
 The JMS programming API minimizes the concepts that are required to build messaging systems at the same time facilitates sufficient features to even maintain sophisticated messaging systems.

@@ -1,0 +1,52 @@
+\section{Data set} \label{dataset}
+
+The data set used for the evaluation in this thesis is the data set provided in the ACM DEBS 2015 Grand Challenge \parencite{debs2015}. The same data set is used for evaluation of Android application and the extension for Apache ActiveMQ Artemis. The data set is under "The Freedom of Information Law" (FOIL) and it has been made public by Chris Whong \parencite{debs2015_dataset}.
+
+The data set consists of data from reports of taxi trips. The original data set contains \textasciitilde170 million trips. The data contains various attributes that are described in the Table \ref{table:data} \parencite{debs2015_desc}.
+
+\begin{table}[h!]
+  \centering
+  \caption{Data attributes and description}
+  \label{table:data}
+  \begin{tabular}{ll}
+    \toprule
+    Attribute & Description\\
+    \midrule
+    tip\_amount & Tip amount in dollars\\
+    payment\_type & Tip amount in dollars\\
+	dropoff\_latitude & Coordinate of the latitude of drop-off location\\
+	dropoff\_datetime & Time of drop-off of passenger(s)\\
+	medallion & MD5 checksum of the Taxi identifier\\
+	pickup\_datetime & Time of pick-up of passenger(s)\\
+	mta\_tax & Tax amount in dollars\\
+	total\_amount & Total amount paid in dollars\\
+	tolls\_amount & Tunnel and bridge toll amount in dollars\\
+	surcharge & Surcharge amount in dollars\\
+	hack\_license & MD5 checksum of the Taxi license identifier\\
+	fare\_amount & Fare amount in dollars\\
+	pickup\_longitude & Coordinate of the longitude of pick-up location\\
+	pickup\_latitude & Coordinate of the latitude of pick-up location\\
+	trip\_time\_in\_secs & Total duration of the trip in seconds\\
+	dropoff\_longitude & Coordinate of the longitude of drop-off location\\
+	trip\_distance & Total trip distance in miles\\
+    \bottomrule
+  \end{tabular}
+\end{table} 
+
+For evaluation purpose the data set have been represented in three formats, XML, JSON and CSV. Listing \ref{lst:xml}, \ref{lst:json}, and \ref{lst:csv} shows a trip details in XML, JSON and CSV respectively. 
+
+\bigskip
+\begin{lstlisting}[style=XmlInputStyle,caption=Trip details in XML, label={lst:xml}][h!]
+<trip><tip_amount>2.40</tip_amount><payment_type>CRD</payment_type><dropoff_latitude>40.762447</dropoff_latitude><dropoff_datetime>2013-01-01 00:37:00</dropoff_datetime><medallion>DE90A87F12F0EAEC2B76AB428F2832AB</medallion><pickup_datetime>2013-01-01 00:22:00</pickup_datetime><mta_tax>0.50</mta_tax><total_amount>14.90</total_amount><tolls_amount>0.00</tolls_amount><surcharge>0.50</surcharge><hack_license>E66E58207128619CFF2D2E2C3C7ECC08</hack_license><fare_amount>11.50</fare_amount><pickup_longitude>-74.004074</pickup_longitude><pickup_latitude>40.742676</pickup_latitude><trip_time_in_secs>900</trip_time_in_secs><dropoff_longitude>-73.990257</dropoff_longitude><trip_distance>2.26</trip_distance></trip>
+\end{lstlisting} 
+
+\bigskip
+\begin{lstlisting}[style=JsonInputStyle,caption=Trip details in JSON, label={lst:json}][h!]
+{"tip_amount": "2.40", "payment_type": "CRD", "dropoff_latitude": "40.762447", "dropoff_datetime": "2013-01-01 00:37:00", "medallion": "DE90A87F12F0EAEC2B76AB428F2832AB", "pickup_datetime": "2013-01-01 00:22:00", "mta_tax": "0.50", "total_amount": "14.90", "tolls_amount": "0.00", "surcharge": "0.50", "hack_license": "E66E58207128619CFF2D2E2C3C7ECC08", "fare_amount": "11.50", "pickup_longitude": "-74.004074", "pickup_latitude": "40.742676", "trip_time_in_secs": "900", "dropoff_longitude": "-73.990257", "trip_distance": "2.26"}
+\end{lstlisting} 
+
+\bigskip
+\begin{lstlisting}[style=XmlInputStyle,caption=Trip details in CSV, label={lst:csv}][h!]
+2.40,CRD,40.762447,2013-01-01 00:37:00,DE90A87F12F0EAEC2B76AB428F2832AB,2013-01-01 00:22:00,0.50,14.90,0.00,0.50,E66E58207128619CFF2D2E2C3C7ECC08,11.50,-74.004074,40.742676,900,-73.990257,2.26
+\end{lstlisting} 
+

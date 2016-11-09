@@ -6,12 +6,12 @@ Interceptors are of two types, incoming interceptors, and outgoing interceptors.
 
 \subsubsection{Incoming Interceptor} \label{subsubsection:in_interceptor}
 
-An incoming interceptor intercepts packets entering the server. Listing \ref{lst:incoming} shows example configuration of an incoming interceptor implemented by the class \textit{PropertyInterceptor}.
+An incoming interceptor intercepts packets entering the server. Listing \ref{lst:incoming} shows example configuration of an incoming interceptor implemented by the class \textit{SamplingBrokerInterceptor}.
 
 \bigskip
-\begin{lstlisting}[style=XmlInputStyle,caption=Configuring Incoming Interceptor Example, label={lst:incoming}]
+\begin{lstlisting}[style=XmlInputStyle,caption=Configuring incoming interceptor example, label={lst:incoming}]
 <remoting-incoming-interceptors>
-   <class-name>org.apache.activemq.artemis.core.protocol.mqtt.PropertyInterceptor</class-name>
+   <class-name>org.apache.activemq.artemis.core.protocol.mqtt.SamplingBrokerInterceptor</class-name>
 </remoting-incoming-interceptors>
 \end{lstlisting}
 
@@ -20,7 +20,7 @@ An incoming interceptor intercepts packets entering the server. Listing \ref{lst
 An outgoing interceptor intercepts packets exiting the server. Listing \ref{lst:outgoing} shows example configuration of an outgoing interceptor implemented by the class \textit{ConnectionInterceptor}.
 
 \bigskip
-\begin{lstlisting}[style=XmlInputStyle,caption=Configuring Outgoing Interceptor Example, label={lst:outgoing}]
+\begin{lstlisting}[style=XmlInputStyle,caption=Configuring outgoing interceptor example, label={lst:outgoing}]
 <remoting-outgoing-interceptors>
    <class-name>org.apache.activemq.artemis.core.protocol.mqtt.ConnectionInterceptor</class-name>
 </remoting-outgoing-interceptors>

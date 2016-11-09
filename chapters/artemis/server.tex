@@ -4,7 +4,7 @@ This section describes the installation of Apache ActiveMQ Artemis. It also prov
 
 \subsubsection{Installation}
 
-The source code of Apache ActiveMQ Artemis can be downloaded from its repository \parencite{artemis_github}. After downloading the project, it can be build using the commands in Listing \ref{lst:build}.
+The source code of Apache ActiveMQ Artemis can be downloaded from its repository \parencite{artemis_github}. After downloading the project, it can be built using the commands in Listing \ref{lst:build}.
 
 \bigskip
 \begin{lstlisting}[style=BashInputStyle,caption=Building Apache ActiveMQ Artemis, label={lst:build}]
@@ -14,7 +14,7 @@ The source code of Apache ActiveMQ Artemis can be downloaded from its repository
 Once the build is complete, the distribution is located under the folder \textit{artemis-distribution}.
 The distribution contains the relevant folders shown in Listing \ref{lst:tree}.
 
-\begin{lstlisting}[style=Tree,caption=Apache ActiveMQ Artemis Folders, label={lst:tree}]
+\begin{lstlisting}[style=Tree,caption=Apache ActiveMQ Artemis folders, label={lst:tree}]
          |___ bin
          |
          |___ web
@@ -47,10 +47,10 @@ The distribution contains the relevant folders shown in Listing \ref{lst:tree}.
 
 \subsubsection{Creating a Broker Instance}
 
-To create a broker instance by the name testbroker from the Artemis distribution navigate to the \textit{bin} directory and execute the  command in Listing \ref{lst:create}. 
+To create a broker instance by a name for eg., testbroker, navigate to the \textit{bin} directory and execute the command in Listing \ref{lst:create}. 
 
 \bigskip
-\begin{lstlisting}[style=BashInputStyle,caption=Creating Broker Instance, label={lst:create}]
+\begin{lstlisting}[style=BashInputStyle,caption=Creating broker instance, label={lst:create}]
   $ ./artemis create testbroker
 \end{lstlisting}
 
@@ -83,13 +83,13 @@ Under the directory \textit{etc} a file named \textit{broker.xml} is the main co
 To start the broker instance navigate to the \textit{bin} directory of the broker instance and execute the command in Listing \ref{lst:start}.
 
 \bigskip
-\begin{lstlisting}[style=BashInputStyle,caption=Starting Broker Instance, label={lst:start}]
+\begin{lstlisting}[style=BashInputStyle,caption=Starting broker instance, label={lst:start}]
   $ ./artemis run
 \end{lstlisting}
 
 To stop the broker instance the same \textit{artemis} script is used but with a stop argument. Listing \ref{lst:stop} is an example.
 
 \bigskip
-\begin{lstlisting}[style=BashInputStyle,caption=Stopping Broker Instance, label={lst:stop}]
+\begin{lstlisting}[style=BashInputStyle,caption=Stopping broker instance, label={lst:stop}]
   $ ./artemis stop
 \end{lstlisting}

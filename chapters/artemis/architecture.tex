@@ -26,9 +26,9 @@ Apache ActiveMQ Artemis currently offers two APIs for the client side that can b
 \begin{figure}[h!]
 \centering
 \includegraphics[keepaspectratio, width=1.2\textwidth, trim={0 8cm 0 6cm},clip]{artemis.pdf}
-\caption{Apache ActiveMQ Artemis High Level Architecture}\label{figures:artemis}
+\caption{Apache ActiveMQ Artemis high-level architecture}\label{figures:artemis}
 \end{figure}
 
-Apache ActiveMQ Artemis supports protocols such as OpenWire, STOMP, AMQP, and MQTT. Apart from these, a client can choose to communicate using JMS as well via the core protocol. Apache ActiveMQ Artemis is protocol agnostic and hence it does not understand JMS. When the client uses the JMS API, the JMS interactions are translated to the core API using the wire format of the Apache ActiveMQ Artemis. On the client side, a JMS facade layer is used to implement JMS semantics.
+Apache ActiveMQ Artemis supports protocols such as OpenWire, STOMP, AMQP, and MQTT. A client can choose to communicate using JMS or the core API. Apache ActiveMQ Artemis is protocol agnostic and hence it does not understand JMS. When the client uses the JMS API, the JMS interactions are translated to the core API using the wire format of the Apache ActiveMQ Artemis. On the client side, a JMS facade layer is used to implement JMS semantics.
 
-Figure \ref{figures:artemis} shows the high level architecture of Apache ActiveMQ Artemis. It also shows the interaction of two applications. One application interacts using the JMS client API and another application uses the core client API for communication with the server. A facade layer can be seen for the application that uses the JMS client API for interaction.
+Figure \ref{figures:artemis} shows the high-level architecture of Apache ActiveMQ Artemis. It also shows the interaction of two applications. One application interacts using the JMS client API and another application uses the core client API for communication with the server. A facade layer can be seen for the application that uses the JMS client API for interaction.

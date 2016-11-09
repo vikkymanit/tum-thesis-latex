@@ -1,8 +1,8 @@
 \subsection{Apache Kafka}
 
-Apache Kafka is another open source message broker from the Apache Software Foundation \parencite{kafka_official_site}. It is distributed streaming platform written in Scala. Originally Kafka was developed by LinkedIn and was later open sourced in 2011. 
+Apache Kafka is another open source message broker from the Apache Software Foundation \parencite{thein2014apache}. It is a distributed streaming platform written in Scala \parencite{kafka_official_site}. Originally Apache Kafka was developed by LinkedIn and was later open sourced in 2011. 
 
-Kafka has client in many languages \parencite{kafka_official_wiki} such as Java, C++, Python, etc.
-Kafka uses a custom binary protocol over TCP rather than using STOMP, AMQP, MQTT or any other existing protocol \parencite{kafka_protocol}. This is mainly because the required control over the protocol in order achieve the desired output that Kafka provides. To support load balancing Kafka supports clustering \parencite{garg2013apache} in which each instance of the broker communicates via ZooKeeper. The cluster state is maintained using ZooKeeper since the brokers are stateless. It provides high availability by via replication in which the followers keep their logs updated with respect to the leader's logs. 
+Apache Kafka has client in many languages such as Java, C++, Python, etc \parencite{kafka_official_wiki}.
+It uses a custom binary protocol over TCP rather than using STOMP, AMQP, MQTT or any other existing protocol \parencite{kafka_protocol}. This is mainly because the required control over the protocol in order achieve the desired output that Apache Kafka provides. To support load balancing Apache Kafka supports clustering \parencite{garg2013apache} in which each instance of the broker communicates via ZooKeeper. The cluster state is maintained using ZooKeeper since the brokers are stateless. It provides high availability via replication in which the followers keep their logs updated with respect to the leader's logs. 
 
-Kafka is not just used as a stream processing system but also as a storage system and messaging system. Kafka is used by many enterprises such as Spotify, Netflix and PayPal \parencite{kafka_users}.
+Apache Kafka is not just used as a stream processing system but also as a storage system and messaging system. Apache Kafka is used by many enterprises such as Spotify, Netflix and PayPal \parencite{kafka_users}.

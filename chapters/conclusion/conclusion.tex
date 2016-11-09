@@ -1,0 +1,9 @@
+\chapter{Conclusion}\label{chapter:conclusion}
+
+Publish-subscribe systems have widespread adoptions because of its scalability and decoupling of publishers and subscribers. In recent years, the processing power on mobile devices has increased significantly. Although the network bandwidth for mobile devices has improved, there has been a higher improvement in processing power of devices. Hence trading CPU for bandwidth makes sense and SSPS is a good solution for this. This is especially beneficial in areas such as IoT sensor networks, where the metadata are repeated in every event. 
+
+With first part of this thesis, we were successfully able to demonstrate the use of SSPS for mobile applications. The increase in throughput for different data formats such as JSON, XML, and CSV on a low bandwidth network was a real proof of this. 
+
+In the second part, we also solved one of the major problems in the current implementation of the SSPS, i.e., to replace the centralized broker. A good review of various distributed brokers led us to choose Apache ActiveMQ Artemis as the system to implement the SSPS model. We developed a prototypical extension to Apache ActiveMQ Artemis which can be used by just specifying in the configuration file. The implementation was able to handle recovery of the dictionary on failover successfully. We analyzed the throughput with and without SSPS and observed the desired increase in throughput just like the initial SSPS implementation. Finally, we measured the resource utilization of SSPS on Apache ActiveMQ Artemis.
+
+All in all, SSPS can be seen as a great addition to the existing benefits of publish-subscribe systems.

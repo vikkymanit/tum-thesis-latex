@@ -29,6 +29,7 @@
 \definecolor{pgreen}{rgb}{0,0.5,0}
 \definecolor{pred}{rgb}{0.9,0,0}
 \definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
 
 \lstdefinestyle{BashInputStyle}{
   language=bash,
@@ -63,6 +64,24 @@
   tagstyle=\color{darkblue},
   morekeywords={broadcast-groups,broadcast-group,group-port}
 }
+
+\lstdefinestyle{JsonInputStyle}{
+  basicstyle=\small\sffamily,
+  % numbers=left,
+  % numberstyle=\tiny,
+  % numbersep=3pt,
+  frame=tb,
+  columns=fullflexible,
+  backgroundcolor=\color{light-gray},
+  linewidth=0.9\linewidth,
+  xleftmargin=0.1\linewidth,
+  breakatwhitespace=false,
+  breaklines=true,
+  postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}},
+  keywordstyle= \color{darkblue},
+  morekeywords={tip_amount,payment_type,dropoff_latitude,dropoff_datetime,medallion,pickup_datetime,mta_tax,total_amount,tolls_amount,surcharge,hack_license,fare_amount,pickup_longitude,pickup_latitude,trip_time_in_secs,dropoff_longitude,trip_distance}
+}
+
 
 \lstdefinestyle{JavaInputStyle}{
   language=Java,

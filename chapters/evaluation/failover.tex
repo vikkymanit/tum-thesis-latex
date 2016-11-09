@@ -1,0 +1,13 @@
+\subsection{Failover} \label{failover}
+
+\subsubsection{Setup}
+
+To test the failover scenario, a set up of an Apache ActiveMQ Artemis cluster having one live node and two backup nodes is used.
+
+\subsubsection{Result}
+
+The entire system normally runs on the live node. To test for failover, the live server is intentionally shut down abruptly after the dictionaries are published. The reason we need to wait at least for the first dictionary to be published is that the dictionary is made available for failover only when the dictionary is published and also if there is no dictionary available then the backup node cannot recover any dictionary and has to start the adaptive algorithm from the start.
+
+Once we kill the live server, one among the two backup nodes takes over the live server and continues operating normally. The backup server, which is now the live server can handle the compressed messages as it now has the dictionary.
+
+

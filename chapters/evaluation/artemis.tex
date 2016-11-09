@@ -1,0 +1,68 @@
+\clearpage
+
+\section{SSPS for Apache ActiveMQ Artemis} \label{artemis}
+
+In this section, we see various results of the prototypical implementation of SSPS for Apache ActiveMQ Artemis. First, we test for the difference in throughput with and without the SSPS. Then the CPU and memory utilization are measured. Finally, the failover scenario is tested.
+
+\subsection{Throughput}
+\subsubsection{Setup} \label{subsubsection:throughput_setup}
+
+There are three entities involved in the setup. The publisher, subscriber and the broker (Apache ActiveMQ Artemis). All the three entities are running on a separate server instance having the following configuration on an open stack cluster.
+
+\begin{itemize}
+    \item \textbf{CPU:} Intel(R) Xeon(R) CPU E5-2630 v3 @ 2.40GHz
+    \item \textbf{Memory:} 4 GB
+    \item \textbf{OS:} Ubuntu xenial
+\end{itemize}
+
+We limit the bandwidth to 10KB/second using wondershaper \parencite{wondershaper} at the subscriber end to test the system for low bandwidth situation.
+
+\subsubsection{Result}
+
+The throughput is measured on the subscriber end. First, we examine the throughput without the SSPS on Apache ActiveMQ Artemis and then we monitor the throughput using SSPS on Apache ActiveMQ Artemis.
+
+\paragraph{Throughput without SSPS} \mbox{} \\
+
+Figure \ref{figures:throughput_wsdc} shows the throughput at the subscriber without the SSPS on Apache ActiveMQ Artemis. The average throughput is observed to be \textasciitilde14 messages/second.
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpbot}{0pt}
+\setlength{\intextsep}{20pt}
+\makeatother
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{throughput_wsdc.pdf}
+\caption{Throughput without ssps}\label{figures:throughput_wsdc}
+\end{figure}
+
+\paragraph{Throughput with SSPS} \mbox{} \\
+
+To use the SSPS on Apache ActiveMQ Artemis the interceptor needs to be configured in the \textit{broker.xml} configuration file \ref{subsubsection:in_interceptor}. Figure \ref{figures:throughput_sdc} shows the throughput at the subscriber with SSPS on Apache ActiveMQ Artemis. The average throughput is observed to be between 60 - 70 messages/second. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{throughput_sdc.pdf}
+\caption{Throughput with ssps}\label{figures:throughput_sdc}
+\end{figure}
+
+The initial spike is because in SSPS model the first dictionary is sampled after 100 uncompressed messages and then made available. This happens only during the start of the system. Subsequent new clients do not suffer from these. Once the dictionary is available to the publisher and subscriber, there is a huge increase in the throughput at the subscriber end.
+
+Figure \ref{figures:throughput_sdc_sec} shows the throughput for first few seconds when there is no dictionary sampled and made available. 
+
+Figure \ref{figures:throughput_sdc2} shows the same result in a different way. The throughput is shown against timeline in seconds till the first dictionary is made available to the publisher and subscriber, and then the throughput is shown against timeline in minutes.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{throughput_sdc_sec.pdf}
+\caption{Throughput slice for first 20 seconds}\label{figures:throughput_sdc_sec}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{throughput_sdc2.pdf}
+\caption{Throughput with ssps}\label{figures:throughput_sdc2}
+\end{figure}
+
+\input{chapters/evaluation/cpu}
+\input{chapters/evaluation/failover}

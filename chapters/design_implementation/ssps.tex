@@ -1,1 +1,154 @@
-\subsection{} \label{subsection:algo}
+\subsection{SSPS Algorithm} \label{subsection:algo}
+
+The sampling broker module runs a conservative adaptive algorithm which is same as the one used in SSPS \parencite{Doblander:2016:SDC}. The algorithm is responsible for maintaining the dictionary and sampling new dictionary when required depending on the bandwidth savings. 
+
+Algorithm \ref{algo:adaptive} describes the adaptive algorithm that is used from the SSPS model. To understand the algorithm, the below equations are required.
+
+A notification ($n$) is a tuple defined as:
+
+\begin{equation} \label{eq:1}
+n = (t_{n},p_{n})
+\end{equation}	
+
+where $t_{n}$ is the timestamp of the arrived message and $p_{n}$ is the uncompressed payload.
+
+\begin{equation} \label{eq:2}
+\begin{aligned}
+N = \{n_{0},n_{1}....n_{buffersize}\} \\
+TB = \displaystyle\sum_{i=0}^{buffersize} |n_{i}| 
+\end{aligned}
+\end{equation}	
+
+where $N$ is the collection of notifications in a ringbuffer of fixed size $buffersize$ and $TB$ is the total size of the collection in bytes. 
+
+\begin{equation} \label{eq:3}
+\begin{aligned}
+f : N \rightarrow CN \\
+CTB = \displaystyle\sum_{i=0}^{buffersize} |cn_{i}| 
+\end{aligned}
+\end{equation}
+
+where $f$ represents a function that transforms a collection of $N$ notifications to a collection of $CN$ uncompressed notifications, whose total size is represented in bytes by $CTB$.
+
+\begin{equation} \label{eq:4}
+BR = 100 - \dfrac {100 * CTB}{TB}
+\end{equation}
+
+where $BR$ is the bandwidth reduction of the new dictionary. 
+
+\begin{equation} \label{eq:5}
+R = \dfrac {TB} {{TN_{bufferlength}}-{TN_{0}}}
+\end{equation}
+
+where $R$ is the rate in $bytes/second$, $TN_{bufferlength}$ and $TN_{0}$ are timestamps of the last and first element respectively.
+
+\begin{equation} \label{eq:6}
+T_{amortize} = SD/R * BR/100
+\end{equation}
+
+where $T_{amortize}$ indicates the minimum timespan in which publishing the dictionary pays off, given there is no change in R.
+
+Algorithm \ref{algo:bandwidth_savings} describes the bandwidth savings calculation. The dataset is split into training and testing set, with 70\% data for training and 30\% data for evaluation.
+
+\let\oldReturn\Return
+\renewcommand{\Return}{\State\oldReturn}
+\algnewcommand{\LineComment}[1]{\State \(\triangleright\) #1}
+
+
+\begin{algorithm}[!ht]
+\caption{Bandwidth savings with new SD}\label{algo:bandwidth_savings}
+\begin{algorithmic}[1]
+\Require $N$ is a buffer of new notifications
+\Function{CompressionRatioWithNewDict}{$N$}
+\State $N_{train} \gets \{N_{buffersize*0.3}...N_{buffersize}\}$
+\State $N_{test} \gets \{N_{0}...N_{buffersize*0.3}\}$ 
+\State $SD \gets buildDictionary(N_{train})$
+\State $TB_{test} \gets ... $ \Comment{Uncompressed size, see  Eq. \eqref{eq:2}}
+\State $CTB_{test} \gets ... $ \Comment{Compressed size, see  Eq. \eqref{eq:3}}
+\Return $BR \gets ...$ \Comment{See  Eq. \eqref{eq:4}}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}[!ht]
+\caption{Adaptive algorithm}\label{algo:adaptive}
+\begin{algorithmic}[1]
+\Function{MAINTAINDICTIONARY}{\null}
+\State $N \gets N$(100) \Comment{Ringbuffer with size 100}
+\State $SD_{multiplier} \gets 1.0$ \Comment{Dictionary multiplier}
+\State $MinImp \gets 3.0\%$
+\State $adaptions \gets 0$ \Comment{Tracks subsequent changes}
+\State $cntNo \gets 0$ \Comment{Tracks when no change occurs}
+\State $PO_{nosuccess} \gets 600$ 
+\State $Cnt \gets 0$ \Comment{Notification counter}
+\State $NextEval \gets max(Long)$ 
+	\While{$n \gets nextMsg()$}
+		\State $Cnt \gets Cnt$ + 1 
+		\State $N \gets N$.$append(n)$ 
+		\If{$Cnt == 100$} \Comment{First Sampling}
+			\State $BR \gets CompressionRationWithNewDict(N)$ 
+			\State $T_{amortise} \gets calculate(...)$ \Comment{Calc. stats, Eq. \eqref{eq:6}}
+			\State $SD \gets NewDictionary(N,SD_{multiplier})$ 
+			\State $N \gets increaseSize(N,200)$ 
+			\State $NextEval \gets CurrentTime() + T_{amortise} * 2$ 
+			\State $publishDictionary(SD,NextEval + C)$ 
+		\EndIf
+		\If{$NextEval < CurrentTime()$}
+			\State $BR_{curr} \gets CurrentBandwidthSavings(N)$ 
+			\State $BR_{new} \gets BRWithNewDict(N,SD_{multiplieridx})$ 
+			\If{$BR_{curr} + MinImp > BR_{new}$}
+				\State $SD \gets NewDictionary(N,SD_{multiplier})$ 
+				\State $BR_{gain} \gets BR_{new} - BR_{curr}$ 
+				\State $BR/sec = \dfrac {R * BR_{gain}}{100}$ 
+				\State $PO \gets \dfrac {BR/sec}{SD_{size}} * N_{idx} * adaptions^{3} * 10$ 
+				\State $PO_{nosuccess} \gets PO * 2$ 
+				\State $NextEval \gets CurrentTime() + PO$ 
+				\State $adaptions \gets adaptions + 1$ 
+				\State $noadaption \gets 0$ 
+				\If{$adaptions > 9$}
+					\State $adaptions \gets 1$ 
+\algstore{breakPoint1}
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}[!ht]
+\begin{algorithmic}[1]
+\algrestore{breakPoint1}
+				\EndIf
+				\State $cntNo \gets 0$ 
+				\State $publishDictionary(SD,NextEval + C)$ 
+			\Else
+				\State $NextEval = CurrentTime + PO_{nosuccess}$ 
+				\If{$NS == INCB\&cntNo < 4$} \LineComment{Increase buffer, size is the next sampling size}
+					\State $N \gets increaseSize(N,bufferidx)$
+								\ElsIf{$NS == INCD\&cntNo < 4$} \LineComment{Increase dictionary, next dictionary size multiplier}
+					\State $SD_{multiplier} \gets next(SD_{multiplier})$ 
+				\EndIf
+								\State $NS \gets inverse(NS)$ 
+				\State $cntNo \gets cntNo + 1$ 
+				\State $PO_{nosuccess} \gets PO_{nosuccess} * 2$ 
+				\State $increaseExpiryOfSD(NextEval + C)$ 
+			\EndIf
+		\EndIf	
+	\EndWhile
+\EndFunction
+% \algstore{breakPoint2}
+
+\end{algorithmic}
+\end{algorithm}
+
+% \begin{algorithm}[!ht]
+% \begin{algorithmic}[1]
+% \algrestore{breakPoint2}
+
+% \end{algorithmic}
+% \end{algorithm}
+
+
+The Adaptive algorithm \ref{algo:adaptive} records messages and is first triggered when the message count reaches 100. Once the $BR$ is computed, the dictionary is built and published. The expiry time is set to $NextEval$. The subsequent evaluation of the dictionary is triggered before the current dictionary expires, see Line 21. The bandwidth savings with a new dictionary is computed and only if there is a minimum improvement over $MinImp$ a new dictionary is sampled, else a new configuration is tried, see Line 38.
+
+In case the cost of new dictionary and bandwidth savings is justified, a new dictionary is sampled with a payoff time ($PO$) taking into account the additional bandwidth reduction so that the new dictionary amortizes itself, see Line 28. The counter $adaptions$ which is incremented every time a dictionary is published influences the payoff time. To limit the power, it cannot go beyond 9. Next evaluation takes place when the payoff time has passed, and in case the gain is too less then two times the payoff time is waited ($PO_{nosuccess}$) until the next evaluation. 
+
+In case the cost of the new dictionary is not justified, a new configuration is tried, see Line 38. The ring buffer ($INCB$) or dictionary size multiplier ($INCD$) are increased. Four attempts are tried by increasing the dictionary size, further if no success is seen then it is concluded that no improvement can be reached and the next evaluation period is further doubled. Line 47, shows the diagonal approach of once increasing the $INCB$ and the next time increasing the $INCD$. In case an improvement is seen, a dictionary is published.  

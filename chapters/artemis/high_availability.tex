@@ -11,7 +11,7 @@ When replication is used, the live and the backup servers do not share the same 
 
 The synchronization of data between the live and backup servers happens in parallel to the normal operation, and thus it does not cause blocking on connected clients. When the live server fails, the backup server needs to synchronize all the data from the live server before it takes over the live server. The time for synchronization depends on the amount of data and the connection speed. 
 
-The configuration for using replication is defined in the \textit{broker.xml} file. Listing \ref{lst:dr_master} represents the configuration of shared storage for the master server. Listing \ref{lst:dr_slave} represents the configuration of shared storage for backup servers.
+The configuration for using replication is defined in the \textit{broker.xml} file. Listing \ref{lst:dr_master} represents the configuration for the master server. Listing \ref{lst:dr_slave} represents the configuration for backup servers.
 
 \bigskip
 \noindent\begin{minipage}{.45\columnwidth}
@@ -43,7 +43,7 @@ The configuration for using shared storage is defined in the \textit{broker.xml}
 
 \bigskip
 \noindent\begin{minipage}{.45\columnwidth}
-\begin{lstlisting}[style=XmlInputStyle,caption=HA Shared storage master, label={lst:ss_master}]
+\begin{lstlisting}[style=XmlInputStyle,caption=HA shared storage master, label={lst:ss_master}]
 <ha-policy>
    <shared-store>
       <master/>
@@ -52,7 +52,7 @@ The configuration for using shared storage is defined in the \textit{broker.xml}
 \end{lstlisting}
 \end{minipage}\hfill
 \begin{minipage}{.45\columnwidth}
-\begin{lstlisting}[style=XmlInputStyle,caption=HA Shared storage slave, label={lst:ss_slave}]
+\begin{lstlisting}[style=XmlInputStyle,caption=HA shared storage slave, label={lst:ss_slave}]
 <ha-policy>
    <shared-store>
       <slave/>

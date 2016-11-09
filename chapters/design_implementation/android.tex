@@ -19,16 +19,13 @@ At any instant, the application receives data from only one topic.
 
 \subsection{UI Design}
 
-Figure \ref{figures:android_ui} depicts the UI design of the Android application. The components are described below.
+The UI design of the Android application to demonstrate SSPS is focused on simplicity and ease of use \parencite{6002076}. Android material design \parencite{android2015up} is used to create the UI to achieve flat and elegant visual design. Figure \ref{figures:android_ui} depicts the UI design of the Android application. The components are described below.
 
-\makeatletter
-\setlength{\intextsep}{20pt}
-\makeatother
 
 \begin{figure}[h!]
 \centering
 \includegraphics[keepaspectratio, width=0.85\textwidth, trim={0 0 0 0},clip]{android_ui.pdf}
-\caption{Android Application UI Design for SSPS}\label{figures:android_ui}
+\caption{Android application UI design for SSPS}\label{figures:android_ui}
 \end{figure}
 
 \begin{itemize}
@@ -56,7 +53,7 @@ Figure \ref{figures:android_ui} depicts the UI design of the Android application
         This switch enables to toggle between the subscription of compressed and uncompressed version of the currently active subscription.
     \end{itemize}
 
-    \item \textbf{Throughput indicator and Map View:}
+    \item \textbf{Throughput Indicator and Map View:}
     These are explained in detail in the subsequent sections.
 \end{itemize}
 
@@ -64,14 +61,10 @@ Figure \ref{figures:android_ui} depicts the UI design of the Android application
 
 The throughput indicator indicates the current throughput in terms of number of notifications received per second. It shows a numeric value of the current throughput and also indicates on a progress bar.
 
-\makeatletter
-\setlength{\intextsep}{20pt}
-\makeatother
-
 \begin{figure}[h!]
 \centering
 \includegraphics[keepaspectratio, width=0.85\textwidth, trim={0 0 0 0},clip]{throughput.pdf}
-\caption{Android Application Throughput Indicator}\label{figures:android_throughput}
+\caption{Android application throughput indicator}\label{figures:android_throughput}
 \end{figure}
 
 Figure {\ref{figures:android_throughput}} depicts the throughput indicator indicating a throughput of 27.8 Notifications/sec. This is also represented by a blue line below the numeric throughput.
@@ -100,16 +93,12 @@ Listing \ref{lst:code_throughput} shows the code snippet used for the calculatin
 
 \subsection{Map View}
 
-The map view indicates the arrival of notifications. The dataset (explained in a later section) used for the demonstration, has a location co-ordinates as part of every message. We show this location coordinates on the map.  
-
-\makeatletter
-\setlength{\intextsep}{20pt}
-\makeatother
+The map view \parencite{svennerberg2010beginning} indicates the arrival of notifications. The dataset (explained in section \ref{dataset}) used for the demonstration, has a location co-ordinates as part of every message. We show this location coordinates on the map.  
 
 \begin{figure}[h!]
 \centering
 \includegraphics[keepaspectratio, width=0.5\textwidth, trim={0 0 0 0},clip]{mapview.pdf}
-\caption{Android Application Map View}\label{figures:android_map}
+\caption{Android Application map view}\label{figures:android_map}
 \end{figure}
 
 Figure \ref{figures:android_map} depicts a part of the map view with four notifications indicated by four markers. To avoid cluttering on the map with many markers, we display on the last one hundred markers indicating last one hundred notifications.
@@ -117,7 +106,7 @@ Figure \ref{figures:android_map} depicts a part of the map view with four notifi
 Listing \ref{lst:code_marker} shows the function that adds a marker on the map view corresponding to every notification received by the Android application.
 
 \bigskip
-\begin{lstlisting}[style=JavaInputStyle,caption=Function to add marker on Map, label={lst:code_marker}]
+\begin{lstlisting}[style=JavaInputStyle,caption=Function to add marker on map, label={lst:code_marker}]
 
     private void publishCoordinates(String latitude, String longitude) {
         LatLng location = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
